@@ -1,0 +1,227 @@
+String Patterns, Sorting and Grouping:
+
+1) Retrieve all employees whose address is in Elgin,IL.
+
+SELECT F_NAME , L_NAME
+FROM EMPLOYEES
+WHERE ADDRESS LIKE '%Elgin,IL%';
+
+2) Retrieve all employees who were born during the 1970’s.
+
+SELECT F_NAME, L_NAME 
+FROM EMPLOYEES 
+WHERE B_DATE LIKE '197%';
+
+3) Retrieve all employees in department 5 whose salary is between 60000 and 70000.
+
+SELECT *
+FROM EMPLOYEES
+WHERE (SALARY BETWEEN 60000 AND 70000) AND DEP_ID = 5;
+
+4) Retrieve a list of employees ordered by department ID.
+
+SELECT F_NAME, L_NAME, DEP_ID 
+FROM EMPLOYEES
+ORDER BY DEP_ID;
+
+5) Retrieve a list of employees ordered in descending order by department ID and within each department ordered alphabetically 
+in descending order by last name.
+
+SELECT F_NAME, L_NAME, DEP_ID 
+FROM EMPLOYEES
+ORDER BY DEP_ID DESC, L_NAME DESC;
+
+6) In SQL problem 2 (Exercise 2 Problem 2), use department name instead of department ID. Retrieve a list of employees ordered by department name, and 
+within each department ordered alphabetically in descending order by last name
+
+SELECT D.DEP_NAME , E.F_NAME, E.L_NAME
+FROM EMPLOYEES as E, DEPARTMENTS as D
+WHERE E.DEP_ID = D.DEPT_ID_DEP
+ORDER BY D.DEP_NAME, E.L_NAME DESC;
+
+7) For each department ID retrieve the number of employees in the department.
+
+SELECT DEP_ID, COUNT(*)
+FROM EMPLOYEES
+GROUP BY DEP_ID;
+
+8) For each department retrieve the number of employees in the department, and the average employee salary in the department.
+
+SELECT DEP_ID, COUNT(*), AVG(SALARY)
+FROM EMPLOYEES
+GROUP BY DEP_ID;
+
+9) Label the computed columns in the result set of SQL problem 2 (Exercise 3 Problem 2) as NUM_EMPLOYEES and AVG_SALARY.
+
+SELECT DEP_ID, COUNT(*) AS "NUM_EMPLOYEES", AVG(SALARY) AS "AVG_SALARY"
+FROM EMPLOYEES
+GROUP BY DEP_ID;
+
+10) In SQL problem 3 (Exercise 3 Problem 3), order the result set by Average Salary.
+
+SELECT DEP_ID, COUNT(*) AS "NUM_EMPLOYEES", AVG(SALARY) AS "AVG_SALARY"
+FROM EMPLOYEES
+GROUP BY DEP_ID
+ORDER BY AVG_SALARY;
+
+11) In SQL problem 4 (Exercise 3 Problem 4), limit the result to departments with fewer than 4 employees. 
+
+SELECT DEP_ID, COUNT(*) AS "NUM_EMPLOYEES", AVG(SALARY) AS "AVG_SALARY"
+FROM EMPLOYEES
+GROUP BY DEP_ID
+HAVING count(*) < 4
+ORDER BY AVG_SALARY;
+
+Built-in functions:
+
+Query A1: Enter a function that calculates the total cost of all animal rescues in the PETRESCUE table.
+
+SELECT SUM(COST) FROM PETRESCUE;
+
+Query A2: Enter a function that displays the total cost of all animal rescues in the PETRESCUE table in a column called SUM_OF_COST.
+
+SELECT SUM(COST) AS SUM_OF_COST FROM PETRESCUE;
+
+Query A3: Enter a function that displays the maximum quantity of animals rescued.
+
+SELECT MAX(QUANTITY) FROM PETRESCUE;
+
+Query A4: Enter a function that displays the average cost of animals rescued.
+
+SELECT AVG(COST) FROM PETRESCUE;
+
+Query A5: Enter a function that displays the average cost of rescuing a dog.
+
+SELECT AVG(COST/QUANTITY) FROM PETRESCUE 
+WHERE ANIMAL = 'Dog';
+
+Query B1: Enter a function that displays the rounded cost of each rescue.
+
+SELECT ROUND(COST, 2) FROM PETRESCUE;
+
+Query B2: Enter a function that displays the length of each animal name.
+
+SELECT LENGTH(ANIMAL) FROM PETRESCUE;
+
+Query B3: Enter a function that displays the animal name in each rescue in uppercase.
+
+SELECT UCASE(ANIMAL) FROM PETRESCUE;
+
+Query B4: Enter a function that displays the animal name in each rescue in uppercase without duplications.
+
+SELECT DISTINCT(UCASE(ANIMAL)) FROM PETRESCUE;
+
+Query B5: Enter a query that displays all the columns from the PETRESCUE table, where the animal(s) rescued are cats. Use cat in lower case in the query.
+
+SELECT * FROM PETRESCUE WHERE LCASE(ANIMAL) = 'cat';
+
+Query C1: Enter a function that displays the day of the month when cats have been rescued.
+
+SELECT DAY(RESCUEDATE) FROM PETRESCUE WHERE ANIMAL = 'Cat';
+
+Query C2: Enter a function that displays the number of rescues on the 5th month.
+
+SELECT SUM(QUANTITY) FROM PETRESCUE WHERE MONTH(RESCUEDATE) = '05';
+
+Query C3: Enter a function that displays the number of rescues on the 14th day of the month.
+
+SELECT SUM(QUANTITY) FROM PETRESCUE WHERE DAY(RESCUEDATE) = '14';
+
+Query C4: Animals rescued should see the vet within three days of arrivals. Enter a function that displays the third day from each rescue.
+
+SELECT (RESCUEDATE + 3 DAYS) FROM PETRESCUE;
+
+Query C5: Enter a function that displays the length of time the animals have been rescued; the difference between today’s date and the rescue date.
+
+SELECT (CURRENT_TIMESTAMP - RESCUEDATE) FROM PETRESCUE;
+
+Sub-queries and Nested SELECTS:
+
+1) Execute a failing query (i.e. one which gives an error) to retrieve all employees records whose salary is lower than the average salary.
+
+SELECT * 
+FROM EMPLOYEES 
+WHERE salary < AVG(salary);
+
+2) Execute a working query using a sub-select to retrieve all employees records whose salary is lower than the average salary.
+
+SELECT EMP_ID, F_NAME, L_NAME, SALARY 
+FROM EMPLOYEES
+WHERE SALARY < (select AVG(SALARY) 
+                from EMPLOYEES);
+
+3) Execute a failing query (i.e. one which gives an error) to retrieve all employees records with EMP_ID, SALARY and maximum salary as MAX_SALARY in every row.
+
+SELECT EMP_ID, SALARY, MAX(SALARY) AS MAX_SALARY 
+FROM EMPLOYEES;	
+
+4) Execute a Column Expression that retrieves all employees records with EMP_ID, SALARY and maximum salary as MAX_SALARY in every row.
+
+SELECT EMP_ID, SALARY, ( select MAX(SALARY) from EMPLOYEES ) AS MAX_SALARY 
+FROM EMPLOYEES;
+
+5) Execute a Table Expression for the EMPLOYEES table that excludes columns with sensitive employee data (i.e. does not include columns: SSN, B_DATE, SEX, ADDRESS, SALARY).
+
+SELECT * FROM 
+          ( SELECT EMP_ID, F_NAME, L_NAME, DEP_ID FROM EMPLOYEES) AS EMP4ALL;
+
+Working with Multiple Tables:
+
+1) Retrieve only the EMPLOYEES records that correspond to jobs in the JOBS table.
+
+SELECT * FROM EMPLOYEES 
+  WHERE JOB_ID IN 
+            (SELECT JOB_IDENT FROM JOBS);
+
+2) Retrieve only the list of employees whose JOB_TITLE is Jr. Designer.
+
+SELECT * FROM EMPLOYEES 
+WHERE JOB_ID IN 
+          (SELECT JOB_IDENT FROM JOBS 
+            WHERE JOB_TITLE= 'Jr. Designer');
+
+3) Retrieve JOB information and who earn more than $70,000.
+
+SELECT JOB_TITLE, MIN_SALARY,MAX_SALARY,JOB_IDENT FROM JOBS 
+WHERE JOB_IDENT IN 
+      (SELECT JOB_ID FROM EMPLOYEES 
+        WHERE SALARY > 70000 );
+
+4) Retrieve JOB information and list of employees whose birth year is after 1976.
+
+SELECT JOB_TITLE, MIN_SALARY,MAX_SALARY,JOB_IDENT FROM JOBS 
+WHERE JOB_IDENT IN 
+    (SELECT JOB_ID FROM EMPLOYEES 
+      WHERE YEAR(B_DATE)>1976 );
+
+5) Retrieve JOB information and list of female employees whose birth year is after 1976.
+
+SELECT JOB_TITLE, MIN_SALARY,MAX_SALARY,JOB_IDENT FROM JOBS  
+WHERE JOB_IDENT IN 
+    (SELECT JOB_ID FROM EMPLOYEES 
+      WHERE YEAR(B_DATE)>1976 AND SEX='F' );
+
+6) Perform an implicit cartesian/cross join between EMPLOYEES and JOBS tables.
+
+SELECT * FROM EMPLOYEES, JOBS;
+
+7) Retrieve only the EMPLOYEES records that correspond to jobs in the JOBS table.
+
+SELECT * FROM EMPLOYEES, JOBS 
+WHERE EMPLOYEES.JOB_ID = JOBS.JOB_IDENT;
+
+8) Redo the previous query, using shorter aliases for table names.
+
+SELECT * FROM EMPLOYEES E, JOBS J 
+WHERE E.JOB_ID = J.JOB_IDENT;
+
+9) Redo the previous query, but retrieve only the Employee ID, Employee Name and Job Title.
+
+SELECT EMP_ID,F_NAME,L_NAME, JOB_TITLE FROM EMPLOYEES E, JOBS J 
+WHERE E.JOB_ID = J.JOB_IDENT;
+
+10) Redo the previous query, but specify the fully qualified column names with aliases in the SELECT clause.
+
+SELECT E.EMP_ID,E.F_NAME,E.L_NAME, J.JOB_TITLE FROM EMPLOYEES E, JOBS  J 
+WHERE E.JOB_ID = J.JOB_IDENT;
+
