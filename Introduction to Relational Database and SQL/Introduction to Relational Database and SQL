@@ -1,0 +1,28 @@
+Task 1:
+SELECT name, capital
+FROM us_state
+WHERE name = 'Oregon';
+
+Task 2:
+SELECT *
+FROM us_state
+WHERE abbreviation LIKE 'N%'
+ORDER BY name;
+
+Task 3:
+INSERT INTO club_member 
+SET first_name = 'John',
+    last_name = 'Doe',
+    phone_number = '9998887777';
+
+SELECT * FROM club_member;
+
+Task 4:
+DELETE FROM club_member
+WHERE phone_number = '9998887777';
+
+Task 5:
+SELECT first_name, middle_name, last_name, professional_title, tier.description
+FROM club_member, tier
+WHERE club_member.tier_code = tier.code 
+ORDER BY last_name;
