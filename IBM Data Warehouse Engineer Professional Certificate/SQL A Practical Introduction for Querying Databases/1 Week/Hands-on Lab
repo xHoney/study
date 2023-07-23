@@ -1,6 +1,5 @@
 Simple SELECT Statements:
 
-
 1) Retrieve all records with all columns from the “FilmLocations” table.
 
   SELECT * FROM FilmLocations;
