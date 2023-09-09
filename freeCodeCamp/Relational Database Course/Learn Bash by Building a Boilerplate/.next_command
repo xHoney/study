@@ -1,0 +1,242 @@
+builtin unset VSCODE_INJECTION
+[ -z "$VSCODE_SHELL_INTEGRATION" ]
+[ -n "${VSCODE_ENV_REPLACE:-}" ]
+[ -n "${VSCODE_ENV_PREPEND:-}" ]
+[ -n "${VSCODE_ENV_APPEND:-}" ]
+[[ "$(uname -s)" =~ ^CYGWIN*|MINGW*|MSYS* ]]
+[[ "$HISTCONTROL" =~ .. ]]
+__vsc_history_verify=1
+__vsc_initialized=0
+__vsc_original_PS1="$PS1"
+__vsc_original_PS2="$PS2"
+__vsc_custom_PS1=""
+__vsc_custom_PS2=""
+__vsc_in_command_execution="1"
+__vsc_current_command=""
+__vsc_nonce="$VSCODE_NONCE"
+unset VSCODE_NONCE
+[[ -n "${bash_preexec_imported:-}" ]]
+__vsc_dbg_trap="$(__vsc_get_trap DEBUG)"
+[[ -z "$__vsc_dbg_trap" ]]
+[[ "$__vsc_dbg_trap" != '__vsc_preexec "$_"' && "$__vsc_dbg_trap" != '__vsc_preexec_all "$_"' ]]
+trap '__vsc_preexec_all "$_"' DEBUG
+__vsc_original_prompt_command=${PROMPT_COMMAND:-}
+echo hello terminal
+pwd
+ls --color=auto
+cd freeCodeCamp/
+pwd
+__vsc_prompt_cmd_original
+ls --color=auto
+cd test/
+__vsc_prompt_cmd_original
+ls --color=auto
+pwd
+__vsc_prompt_cmd_original
+ls --color=auto
+cd ..
+ls --color=auto
+more package.json
+clear
+ls --color=auto
+cd node_modules/
+ls --color=auto
+ls --color=auto -l
+cd has
+ls --color=auto
+more README.md
+ls --color=auto
+more LICENSE-MIT
+clear
+ls --color=auto
+cd src
+ppwd
+pwd
+ls --color=auto
+more index.js
+cd ..
+cd ..
+cd ../..
+ls --color=auto
+clear
+mkdir website
+ls --color=auto
+cd website/
+__vsc_prompt_cmd_original
+ls --color=auto
+echo hello website
+touch index.html
+__vsc_prompt_cmd_original
+touch styles.css
+ls --color=auto
+touch index.js
+touch .gitignore
+ls --color=auto
+ls --color=auto --help
+ls --color=auto --all
+__vsc_prompt_cmd_original
+cd ..
+cd .
+cd website/
+cd .
+touch background.jpg
+touch header.png
+touch footer.jpeg
+ls --color=auto
+touch roboto.font
+touch lato.font
+touch menlo.font
+ls --color=auto
+touch CodeAlly.svg
+touch CodeRoad.svg
+touch freeCodeCamp.svg
+__vsc_prompt_cmd_original
+ls --color=auto
+mkdir images
+ls --color=auto
+cp background.jpg images/
+cd images/
+ls --color=auto
+cd ..
+ls --color=auto
+rm background.jpg
+ls --color=auto
+cp header.png images/
+ls --color=auto
+cp footer.jpeg images/
+cd images/
+ls --color=auto
+cd ..
+ls --color=auto
+rm header.png
+rm footer.jpeg
+ls --color=auto
+mv roboto.font roboto.woff
+ls --color=auto
+mv lato.font lato.ttf
+__vsc_prompt_cmd_original
+mv menlo.font menlo.otf
+ls --color=auto
+mkdir fonts
+ls --color=auto
+mv roboto.woff fonts/
+find
+mv lato.ttf fonts/
+mv menlo.otf fonts/
+__vsc_prompt_cmd_original
+find
+mkdir client
+mkdir client/src
+mv index.html client/src/
+__vsc_prompt_cmd_original
+find
+mv index.js client/src/
+mv styles.css client/src/
+find
+find client/
+find --help
+find -name index.html
+find -name styles.css
+find -name src
+find
+cd client/
+__vsc_prompt_cmd_original
+mkdir assets
+cd assets/
+__vsc_prompt_cmd_original
+__vsc_prompt_cmd_original
+mkdir images
+cd images/
+touch background.jpg
+cd ../../..
+__vsc_prompt_cmd_original
+cd images/
+__vsc_prompt_cmd_original
+__vsc_prompt_cmd_original
+ls --color=auto
+mv header.png website
+ls --color=auto
+mv website header.png
+ls --color=auto
+mv header.png ..
+ls --color=auto
+cd ..
+ls --color=auto
+find images
+find client/assets/images
+find -name images
+mv header.png client/assets/images/
+find header.png
+find -name header.png
+find -name footer.jpeg
+mv footer.jpeg client/assets/images/
+__vsc_prompt_cmd_original
+mv images/footer.jpeg client/assets/images/
+find
+rmdir images/
+rm -r images/
+ls --color=auto
+rm images/background.jpg
+mkdir images
+touch images/backround.jpg
+rm images/background.jpg
+rmdir images/
+find images/
+rm images/background.jpg
+cd images/
+ls --color=auto
+rm backround.jpg
+ls --color=auto
+cd ..
+rm images/
+rmdir images/
+ls --color=auto
+mkdir client/assets/icons
+mv CodeAlly.svg client/assets/icons/
+find
+mv CodeRoad.svg client/assets/icons/
+mv freeCodeCamp.svg client/assets/icons/
+__vsc_prompt_cmd_original
+find
+mkdir client/assets/fonts
+touch client/assets/fonts/roboto-bold.woff
+touch client/assets/fonts/roboto-light.woff
+find client/assets/fonts/
+__vsc_prompt_cmd_original
+touch client/assets/fonts/lato-bold.ttf
+touch client/assets/fonts/lato-light.ttf
+find
+rm --help
+rm -r fonts/
+__vsc_prompt_cmd_original
+ls --color=auto
+touch package.json
+touch server.js
+touch README.md
+ls --color=auto
+echo Yay!
+echo I finished the boilerplate!
+echo one more thing...
+echo I made this boilerplate >> README.md
+__vsc_prompt_cmd_original
+more README.md
+echo from the command line >> README.md
+more README.md
+echo for the freeCodeCamp bash lessons >> README.md
+more README.md
+cd ..
+ls --color=auto
+mv website/ website-boilerplate
+ls --color=auto
+cp --help
+cp -r website-boilerplate/ toms-website
+ls --color=auto
+__vsc_prompt_cmd_original
+find
+find toms-website/
+find
+find website-boilerplate/
+clear
+__vsc_prompt_cmd_original
+echo goodbye terminal
+exit
